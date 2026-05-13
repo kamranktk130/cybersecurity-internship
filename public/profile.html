@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SecureApp — Profile</title>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0e1a;
+      --panel: #0f1628;
+      --border: #1e3a5f;
+      --accent: #00d4ff;
+      --accent2: #0af0a0;
+      --danger: #ff4455;
+      --text: #c8d8e8;
+      --muted: #4a6080;
+      --font-mono: 'Share Tech Mono', monospace;
+      --font-main: 'Rajdhani', sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-main);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,212,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,255,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      animation: gridMove 20s linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes gridMove {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(40px); }
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 520px;
+      padding: 16px;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px;
+      box-shadow: 0 0 60px rgba(0,0,0,0.5);
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 32px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .avatar {
+      width: 72px; height: 72px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      flex-shrink: 0;
+      box-shadow: 0 0 30px rgba(0,212,255,0.3);
+    }
+
+    .profile-info h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .profile-info p {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent);
+      margin-top: 4px;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(10,240,160,0.1);
+      border: 1px solid rgba(10,240,160,0.3);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--accent2);
+      margin-top: 8px;
+    }
+
+    .status-dot {
+      width: 6px; height: 6px;
+      background: var(--accent2);
+      border-radius: 50%;
+      animation: blink 1.5s ease-in-out infinite;
+    }
+
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+    .info-grid {
+      display: grid;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .info-item {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .info-icon {
+      font-size: 20px;
+      width: 36px;
+      text-align: center;
+    }
+
+    .info-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .info-value {
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 1px;
+    }
+
+    .security-box {
+      background: rgba(0,212,255,0.04);
+      border: 1px solid rgba(0,212,255,0.15);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+    }
+
+    .security-title {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .security-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text);
+      padding: 4px 0;
+    }
+
+    .check { color: var(--accent2); }
+
+    .btn-logout {
+      width: 100%;
+      padding: 14px;
+      background: rgba(255,68,85,0.1);
+      border: 1px solid rgba(255,68,85,0.3);
+      border-radius: 8px;
+      color: var(--danger);
+      font-family: var(--font-main);
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-logout:hover {
+      background: rgba(255,68,85,0.2);
+      box-shadow: 0 0 20px rgba(255,68,85,0.2);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    #loading {
+      text-align: center;
+      font-family: var(--font-mono);
+      color: var(--accent);
+      font-size: 14px;
+      letter-spacing: 2px;
+      animation: blink 1s step-end infinite;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div id="loading">// AUTHENTICATING...</div>
+
+  <div class="card" id="profileCard" style="display:none;">
+    <div class="profile-header">
+      <div class="avatar">👤</div>
+      <div class="profile-info">
+        <h2 id="displayUsername">User</h2>
+        <p id="displayEmail">loading...</p>
+        <div class="status-badge">
+          <div class="status-dot"></div>
+          AUTHENTICATED
+        </div>
+      </div>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-item">
+        <div class="info-icon">🔑</div>
+        <div>
+          <div class="info-label">Auth Method</div>
+          <div class="info-value">JWT Token (1hr expiry)</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">🛡️</div>
+        <div>
+          <div class="info-label">Password Storage</div>
+          <div class="info-value">bcrypt (saltRounds: 10)</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">⏰</div>
+        <div>
+          <div class="info-label">Session Started</div>
+          <div class="info-value" id="sessionTime">--</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="security-box">
+      <div class="security-title">// Security Features Active</div>
+      <div class="security-item"><span class="check">✓</span> Input validation & sanitization</div>
+      <div class="security-item"><span class="check">✓</span> HTTP security headers (Helmet.js)</div>
+      <div class="security-item"><span class="check">✓</span> Rate limiting (10 req / 15 min)</div>
+      <div class="security-item"><span class="check">✓</span> XSS & SQL injection protection</div>
+      <div class="security-item"><span class="check">✓</span> Winston security logging active</div>
+    </div>
+
+    <button class="btn-logout" onclick="logout()">⬡ Logout</button>
+  </div>
+</div>
+
+<script>
+  async function loadProfile() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      window.location.href = '/';
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/profile', {
+        headers: { 'Authorization': 'Bearer ' + token }
+      });
+
+      if (!res.ok) {
+        localStorage.removeItem('token');
+        window.location.href = '/';
+        return;
+      }
+
+      const data = await res.json();
+      document.getElementById('displayUsername').textContent = data.user.username || 'User';
+      document.getElementById('displayEmail').textContent = data.user.email;
+      document.getElementById('sessionTime').textContent = new Date().toLocaleTimeString();
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('profileCard').style.display = 'block';
+    } catch (e) {
+      window.location.href = '/';
+    }
+  }
+
+  function logout() {
+    localStorage.removeItem('token');
+    window.location.href = '/';
+  }
+
+  loadProfile();
+</script>
+</body>
+</html>
