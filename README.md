@@ -100,3 +100,8 @@ node app.js
 
 Visit: http://localhost:3000
 
+## Week 6 – Advanced Security Hardening & Final Penetration Testing
+
+During Week 6 of my DevelopersHub Cybersecurity Internship, I conducted comprehensive security assessments and final hardening of SecureApp. I performed vulnerability scanning using OWASP ZAP, validated HTTP security headers with Nmap, and analyzed Content Security Policy (CSP) configurations. Additionally, I carried out penetration testing to evaluate the application's attack surface and verify the effectiveness of previously implemented security controls, including JWT authentication, CSRF protection, rate limiting, and Fail2Ban simulation. This week strengthened my understanding of web application security, defense-in-depth strategies, and the importance of continuous security testing before production deployment.
+
+
